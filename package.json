@@ -1,0 +1,38 @@
+{
+  "name": "dash-licenses-wrapper",
+  "version": "1.0.0",
+  "description": "Node.js wrapper for dash-licenses, that makes it easier to perform license checks for JS/TS Eclipse Foundation projects",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "dash-licenses-wrapper": "src/dash-licenses-wrapper.js"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  },
+  "mocha": {
+    "timeout": 60000
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eclipse-dash/nodejs-wrapper.git"
+  },
+  "keywords": [
+    "dash-licenses",
+    "wrapper",
+    "license check",
+    "GitHub workflow",
+    "Eclipse Foundation"
+  ],
+  "author": "Ericsson and others",
+  "license": "EPL-2.0",
+  "bugs": {
+    "url": "https://github.com/eclipse-dash/nodejs-wrapper/issues"
+  },
+  "homepage": "https://github.com/eclipse-dash/nodejs-wrapper#readme"
+}

@@ -51,7 +51,7 @@ jobs:
           # build a local npm package "payload" and install it
           npm pack
           npm install
-          npm install --no-save ./dash-licenses-wrapper-*.tgz
+          npm install --no-save ./eclipse-dash-nodejs-wrapper-*.tgz 
           npx dash-licenses-wrapper --inputFile=package-lock.json
         env:
           DASH_LICENSES_PAT: ${{ secrets.DASH_LICENSES_PAT }}

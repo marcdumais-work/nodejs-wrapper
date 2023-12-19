@@ -107,17 +107,17 @@ describe("dash-licenses-wrapper tests", function() {
                     "--noColor",
                     "--dryRun",
                     "--verbose",
-                    "--configFile=examples/dashLicensesConfig.json"
+                    "--configFile=examples/license-check-config.json"
                 ]);
 
             expect(status).to.equal(0);
-            expect(cfgFinal.configFile).to.equal(cfgCLI.configFile).to.equal("examples/dashLicensesConfig.json");
+            expect(cfgFinal.configFile).to.equal(cfgCLI.configFile).to.equal("examples/license-check-config.json");
             expect(cfgFinal.project).to.equal(cfgFile.project).to.equal("ecd.cdt-cloud");
             expect(cfgFinal.inputFile).to.equal(cfgFile.inputFile).to.equal("examples/package-lock.json");
             expect(cfgFinal.batch).to.equal(cfgFile.batch).to.equal(51);
             expect(cfgFinal.timeout).to.equal(cfgFile.timeout).to.equal(241);
-            expect(cfgFinal.exclusions).to.equal(cfgFile.exclusions).to.equal("examples/dashLicensesExclusions.json");
-            expect(cfgFinal.summary).to.equal(cfgFile.summary).to.equal("dependency-check-summary.txt");
+            expect(cfgFinal.exclusions).to.equal(cfgFile.exclusions).to.equal("examples/license-check-exclusions.json");
+            expect(cfgFinal.summary).to.equal(cfgFile.summary).to.equal("license-check-summary.txt");
         });
     });
 

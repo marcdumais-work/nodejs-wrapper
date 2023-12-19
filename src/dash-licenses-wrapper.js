@@ -295,7 +295,7 @@ function printHelp() {
     help('  npx dash-licenses-wrapper --dry-run --configFile=configs/dashLicensesConfig.json');
     help('  npx dash-licenses-wrapper --inputFile=package-lock.json --summary=/tmp/license-check-summary.txt --review');
     help('  npx dash-licenses-wrapper --summary=license-check-summary.txt --review --project=ecd.theia');
-    help('  npx dash-licenses-wrapper --summary=license-check-summary.txt --review --project=ecd.theia --exclusions=license-check-exclusions.json');
+    help('  npx dash-licenses-wrapper --summary=license-check-summary.txt --review --project=ecd.theia --exclusions=configs/license-check-exclusions.json');
 }
 
 function getPrintableConfig(configObj) {

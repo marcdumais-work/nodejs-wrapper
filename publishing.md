@@ -1,4 +1,4 @@
-# Publishing `dash-licenses-wrapper`
+# Publishing `@eclipse-dash/nodejs-wrapper`
 
 ```bash
 # Setup npm token. e.g.

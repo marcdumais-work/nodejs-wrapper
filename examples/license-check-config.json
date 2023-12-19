@@ -4,6 +4,6 @@
     "inputFile": "examples/package-lock.json",
     "batch": 51,
     "timeout": 241,
-    "exclusions": "examples/dashLicensesExclusions.json",
-    "summary": "dependency-check-summary.txt"
+    "exclusions": "examples/license-check-exclusions.json",
+    "summary": "license-check-summary.txt"
 }

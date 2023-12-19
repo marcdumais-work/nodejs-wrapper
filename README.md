@@ -1,4 +1,4 @@
-# dash-licenses nodejs-wrapper
+# Eclipse dash-licenses nodejs-wrapper
 
 This wrapper makes it easy to integrate and run the Eclipse [Dash Licenses](https://github.com/eclipse/dash-licenses) Tool in Eclipse Foundation project repositories, both locally and during CI on GitHub (i.e. on Pull Requests). Doing so is the best way to catch early, any 3PP components that has incompatible or have unclear licenses. Optionally, `dash-licenses` can be run in `automatic IP review mode`, to automatically create IP Check tickets, on the Eclipse Foundation Gitlab instance, one for each 3PP component that fails the check, for further scrutiny. These tickets can often be approved automatically in minutes.
 
@@ -15,19 +15,17 @@ This wrapper makes it easy to integrate and run the Eclipse [Dash Licenses](http
 
 ## How to install and use
 
-(Note: This wrapper is planned to soon be made available as a `npm package` - until then the below will not work )
-
-This npm package contains the `dash-licenses-wrapper.js` script that uses `dash-licenses` under-the-hood, an example GitHub workflow that uses the wrapper and some example configuration files.
+The npm package produced from this repository contains the `dash-licenses-wrapper.js` script that uses `dash-licenses` under-the-hood, an example GitHub workflow that uses the wrapper and some example configuration files.
 
 To install this package as a "devDependency" in your project, use one of the following commands from the root of your project, according to the project's npm client:
 
 ```bash
 # yarn:
 # note: if prompted to do so, you may need to add option "--ignore-workspace-root-check"
-yarn add dash-licenses-wrapper --dev
+yarn add @eclipse-dash/nodejs-wrapper --dev
 
 # npm:
-npm install dash-licenses-wrapper --save-dev
+npm install @eclipse-dash/nodejs-wrapper --save-dev
 ```
 
 Once installed, you can run a license check, from the repo root, with the following command:
@@ -73,7 +71,7 @@ A configuration file can be used. Values defined therein will override wrapper d
     "inputFile": "./package-lock.json",
     "batch": "50",
     "timeout": "240",
-    "exclusionsFile": "configs/dashLicensesExclusions.json",
+    "exclusionsFile": "configs/license-check-exclusions.json",
     "summaryFile": "dash-licenses-summary.txt"
 }
 ```
@@ -99,7 +97,7 @@ The `exclusions file` contains one dependency per line, with an optional comment
 
 Example scenario: an important Pull Request (PR) adds a 3PP dependency, whose license is believed by the project to be compatible, but for which `dash-licenses` disagrees (e.g. because of a low score). The dependency is submitted the IP team for further analysis but can't be automatically approved, quickly. In the meantime, to avoid delaying merging the important PR or merging and having the "License Check" CI job fail until the dependency is officially approved, it may be added to the `exclusions file`:
 
-Let's say the project's exclusion file is `configs/dashLicensesExclusions.json`
+Let's say the project's exclusion file is `configs/license-check-exclusions.json`
 
 The following entry is added: the first field is the 3PP as reported by `dash-licenses` and the second field is an optional comment, that can be used to track the reason for excluding the dependency from failing the license check. e.g.:
 
@@ -110,14 +108,14 @@ The following entry is added: the first field is the 3PP as reported by `dash-li
 And then the wrapper can be called with CLI parameter `--exclusions` pointing to the `exclusions` file, like so:
 
 ```bash
-npx dash-licenses-wrapper --inputFile=./package-lock.json --exclusions=configs/dashLicensesExclusions.json
+npx dash-licenses-wrapper --inputFile=./package-lock.json --exclusions=configs/license-check-exclusions.json
 ```
 
 Exclusion file: `<repo_root>/dependency-check-baseline.json`
 
 ## GitHub workflow
 
-An example workflow, that runs the license check, is provided in directory `examples` (by default under `node_modules/dash-licenses-wrapper/examples/license-check-workflow.yml`). It can be copied to a GitHub project's directory `<repo root>/.github/workflows` and adapted for the given project.
+An example workflow, that runs the license check, is provided in directory `examples` (by default under `node_modules/@eclipse-dash/nodejs-wrapper/examples/license-check-workflow.yml`). It can be copied to a GitHub project's directory `<repo root>/.github/workflows` and adapted for the given project.
 
 If the project has added a `scripts` entry in the root `package.json` to run the license check, that may be used instead of `npx dash-licenses-wrapper [...]`. E.g. `yarn license:check [...]`.
 

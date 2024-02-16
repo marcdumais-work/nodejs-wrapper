@@ -1,0 +1,82 @@
+name: ci-cd
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  build-and-test:
+    name: Build and Test
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: ['18']
+        java: ['11']
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Use Java ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: ${{ matrix.java }}
+
+      - name: Run Tests
+        if: matrix.tests != 'skip'
+        shell: bash
+        run: |
+          yarn
+          yarn test
+
+  publish-latest:
+    needs: build-and-test
+    # if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/v') && github.repository == 'eclipse-dash/nodejs-wrapper'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.repository == 'eclipse-dash/nodejs-wrapper' && contains(github.event.head_commit.message, '[Release]: v')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['18']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: 'https://registry.npmjs.org'
+      - name: Pre-Publish 
+        shell: bash
+        run: |
+          yarn
+      - name: Publish to npm
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 5
+          retry_wait_seconds: 60
+          max_attempts: 3
+          retry_on: error
+          command: yarn publish:ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

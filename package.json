@@ -12,7 +12,10 @@
   "scripts": {
     "start": "node src/dash-licenses-wrapper.js",
     "test": "mocha --reporter spec",
-    "publish:ci": "yarn publish --non-interactive --access public --registry https://registry.npmjs.org/"
+    "publish:ci": "yarn publish --non-interactive --access public --registry https://registry.npmjs.org/",
+    "version:major": "lerna version major --exact --no-push --yes -m \"[Release]: v%s #major\n\nGitHub workflow shall publish and tag upon merge.\"",
+    "version:minor": "lerna version minor --exact --no-push --yes -m \"[Release]: v%s #minor\n\nGitHub workflow shall publish and tag upon merge.\"",
+    "version:patch": "lerna version patch --exact --no-push --yes -m \"[Release]: v%s #patch\n\nGitHub workflow shall publish and tag upon merge.\""
   },
   "files": [
     "src/*",
@@ -22,6 +25,7 @@
   ],
   "devDependencies": {
     "chai": "^4.3.10",
+    "lerna": "^7.0.0",
     "mocha": "^10.2.0"
   },
   "mocha": {

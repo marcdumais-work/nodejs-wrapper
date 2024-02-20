@@ -48,10 +48,13 @@ jobs:
           yarn
           yarn test
 
-  publish-latest:
+  publish:
     needs: build-and-test
-    # if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/v') && github.repository == 'eclipse-dash/nodejs-wrapper'
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.repository == 'eclipse-dash/nodejs-wrapper' && contains(github.event.head_commit.message, '[Release]: v')
+    if: |
+      github.ref =='refs/heads/main' &&
+      github.event_name == 'push' && 
+      github.repository == 'eclipse-dash/nodejs-wrapper' && 
+      startsWith(github.event.head_commit.message, '[Release]:')
     runs-on: ubuntu-latest
     strategy:
       matrix:
